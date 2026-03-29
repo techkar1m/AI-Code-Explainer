@@ -1,0 +1,57 @@
+<div class="app-container">
+  <div class="header">
+    <div class="header-left">
+      <span class="logo">AI</span>
+      <h1>AI Code Explainer</h1>
+    </div>
+    <button class="history-btn" (click)="showHistory = !showHistory">
+      History ({{ history.length }})
+    </button>
+  </div>
+  <div class="history-panel" *ngIf="showHistory">
+    <h3>Previous Explanations</h3>
+    <div *ngIf="history.length === 0" class="no-history">No history yet.</div>
+    <div class="history-item" *ngFor="let item of history" (click)="loadHistory(item)">
+      <span class="history-lang">{{ item.language }}</span>
+      <span class="history-preview">{{ item.code | slice:0:60 }}...</span>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="panel left-panel">
+      <div class="panel-header">
+        <h2>Your Code</h2>
+        <div class="controls">
+          <select [(ngModel)]="selectedLanguage">
+            <option *ngFor="let lang of languages" [value]="lang.value">
+              {{ lang.label }}
+            </option>
+          </select>
+          <button class="clear-btn" (click)="clearAll()">Clear</button>
+        </div>
+      </div>
+      <textarea [(ngModel)]="code" placeholder="Paste your code here..." spellcheck="false"></textarea>
+      <button class="explain-btn" (click)="explainCode()" [disabled]="isLoading || !code.trim()">
+        {{ isLoading ? 'Analyzing...' : 'Explain Code' }}
+      </button>
+    </div>
+    <div class="panel right-panel">
+      <div class="panel-header">
+        <h2>AI Explanation</h2>
+        <button class="copy-btn" (click)="copyExplanation()" *ngIf="explanation">
+          {{ copied ? 'Copied!' : 'Copy' }}
+        </button>
+      </div>
+      <div *ngIf="!explanation && !isLoading" class="empty-state">
+        <p>Paste your code and click <strong>Explain Code</strong></p>
+        <p>Supports 9 programming languages</p>
+      </div>
+      <div *ngIf="isLoading" class="loading">
+        <div class="spinner"></div>
+        <p>AI is analyzing your code...</p>
+      </div>
+      <div *ngIf="explanation && !isLoading" class="explanation">
+        {{ explanation }}
+      </div>
+    </div>
+  </div>
+</div>
