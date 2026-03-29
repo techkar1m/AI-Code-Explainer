@@ -49,7 +49,7 @@ Every explanation is broken down into:
 
 1. Clone the repository
 
-git clone https://github.com/YOURUSERNAME/ai-code-explainer.git
+git clone https://github.com/techkar1m/ai-code-explainer.git
 cd ai-code-explainer
 
 2. Install dependencies
